@@ -13,6 +13,7 @@ const HomePage = lazy(() => import('@/pages/Home'));
 const ChecklistsPage = lazy(() => import('@/pages/Checklists'));
 const ChecklistNewPage = lazy(() => import('@/pages/ChecklistNew'));
 const ChecklistEditPage = lazy(() => import('@/pages/ChecklistEdit'));
+const ChecklistDetailPage = lazy(() => import('@/pages/ChecklistDetail'));
 const NotFoundPage = lazy(() => import('@/pages/NotFound'));
 
 export const AppRouter = () => {
@@ -23,6 +24,7 @@ export const AppRouter = () => {
           <Route index element={<HomePage />} />
           <Route path="checklists" element={<ChecklistsPage />} />
           <Route path="checklists/new" element={<ChecklistNewPage />} />
+          <Route path="checklists/:id" element={<ChecklistDetailPage />} />
           <Route path="checklists/:id/edit" element={<ChecklistEditPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

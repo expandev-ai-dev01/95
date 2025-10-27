@@ -228,6 +228,40 @@ export async function checklistItemDelete(id: string): Promise<void> {
 
 /**
  * @summary
+ * Toggles the verification status of an item
+ *
+ * @function checklistItemToggleStatus
+ * @module services/checklistItem
+ *
+ * @param {string} id - Item identifier
+ *
+ * @returns {Promise<ChecklistItemEntity>} Updated item entity
+ *
+ * @throws {Error} When item not found
+ *
+ * @example
+ * const updated = await checklistItemToggleStatus('uuid-here');
+ */
+export async function checklistItemToggleStatus(id: string): Promise<ChecklistItemEntity> {
+  const item = checklistItems.get(id);
+
+  if (!item) {
+    throw new Error('Item não encontrado');
+  }
+
+  // Toggle status
+  item.status = item.status === ItemStatus.Pending ? ItemStatus.Verified : ItemStatus.Pending;
+
+  checklistItems.set(item.id, item);
+
+  // Update checklist counts
+  updateItemCounts(item.checklistId);
+
+  return item;
+}
+
+/**
+ * @summary
  * Updates item counts for a checklist (internal helper)
  *
  * @function updateItemCounts

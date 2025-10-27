@@ -14,6 +14,7 @@ import * as checklistController from '@/api/v1/internal/checklist/controller';
 import * as checklistDetailController from '@/api/v1/internal/checklist/detail/controller';
 import * as checklistItemController from '@/api/v1/internal/checklist-item/controller';
 import * as checklistItemDetailController from '@/api/v1/internal/checklist-item/detail/controller';
+import * as checklistItemToggleStatusController from '@/api/v1/internal/checklist-item/toggle-status/controller';
 
 const router = Router();
 
@@ -30,5 +31,8 @@ router.post('/checklist-item', checklistItemController.createHandler);
 router.get('/checklist-item/:id', checklistItemDetailController.getHandler);
 router.put('/checklist-item/:id', checklistItemDetailController.updateHandler);
 router.delete('/checklist-item/:id', checklistItemDetailController.deleteHandler);
+
+// Checklist item status toggle
+router.post('/checklist-item/toggle-status', checklistItemToggleStatusController.postHandler);
 
 export default router;

@@ -24,7 +24,7 @@ const paramsSchema = z.object({
 
 const updateBodySchema = z.object({
   nome: zItemName,
-  observacao: zObservation,
+  observacao: zObservation.optional(),
 });
 
 /**
@@ -95,7 +95,7 @@ export async function updateHandler(
     const data = await checklistItemUpdate({
       id: validatedParams.id,
       nome: validatedBody.nome,
-      observacao: validatedBody.observacao,
+      observacao: validatedBody.observacao || null,
     });
 
     res.json(successResponse(data));

@@ -22,7 +22,7 @@ const paramsSchema = z.object({
 const updateBodySchema = z.object({
   nome: zChecklistName,
   tipoViagem: z.enum(TRIP_TYPES as [string, ...string[]]),
-  descricao: zObservation,
+  descricao: zObservation.optional(),
 });
 
 /**
@@ -96,7 +96,7 @@ export async function updateHandler(
       id: validatedParams.id,
       nome: validatedBody.nome,
       tipoViagem: validatedBody.tipoViagem as TripType,
-      descricao: validatedBody.descricao,
+      descricao: validatedBody.descricao || null,
     });
 
     res.json(successResponse(data));

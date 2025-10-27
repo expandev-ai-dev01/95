@@ -13,9 +13,11 @@ import { LoadingSpinner } from '@/core/components/LoadingSpinner';
 import { checklistService } from '@/domain/checklist/services/checklistService';
 import { ChecklistItemList } from '@/domain/checklistItem/components/ChecklistItemList';
 import { ChecklistProgressBar } from '@/domain/checklistItem/components/ChecklistProgressBar';
+import { ChecklistItemForm } from '@/domain/checklistItem/components/ChecklistItemForm';
+import { useChecklistItemCreate } from '@/domain/checklistItem/hooks/useChecklistItemCreate';
 import { ITEM_STATUSES } from '@/domain/checklistItem/types';
 import type { Checklist } from '@/domain/checklist/types';
-import type { ItemStatus } from '@/domain/checklistItem/types';
+import type { ItemStatus, CreateChecklistItemDto } from '@/domain/checklistItem/types';
 
 export const ChecklistDetailPage = () => {
   const navigate = useNavigate();
@@ -25,6 +27,8 @@ export const ChecklistDetailPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<ItemStatus | 'Todos'>('Todos');
   const [searchText, setSearchText] = useState('');
+  const [showAddForm, setShowAddForm] = useState(false);
+  const { create, isCreating } = useChecklistItemCreate();
 
   useEffect(() => {
     const loadChecklist = async () => {
@@ -49,6 +53,16 @@ export const ChecklistDetailPage = () => {
       setChecklist(data);
     } catch (error: unknown) {
       alert('Erro ao atualizar checklist');
+    }
+  };
+
+  const handleAddItem = async (data: CreateChecklistItemDto) => {
+    try {
+      await create(data);
+      setShowAddForm(false);
+      await handleRefresh();
+    } catch (error: unknown) {
+      alert('Erro ao adicionar item');
     }
   };
 
@@ -93,6 +107,24 @@ export const ChecklistDetailPage = () => {
           verifiedItems={checklist.itensVerificados}
         />
       </div>
+
+      {showAddForm ? (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Adicionar Novo Item</h2>
+          <ChecklistItemForm
+            checklistId={id!}
+            onSubmit={handleAddItem}
+            onCancel={() => setShowAddForm(false)}
+            isSubmitting={isCreating}
+          />
+        </div>
+      ) : (
+        <div className="mb-6">
+          <Button variant="primary" fullWidth onClick={() => setShowAddForm(true)}>
+            + Adicionar Item
+          </Button>
+        </div>
+      )}
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -18,7 +18,7 @@ import { TripType, TRIP_TYPES } from '@/constants/tripType';
 const createBodySchema = z.object({
   nome: zChecklistName,
   tipoViagem: z.enum(TRIP_TYPES as [string, ...string[]]),
-  descricao: zObservation,
+  descricao: zObservation.optional(),
 });
 
 const listQuerySchema = z.object({
@@ -96,7 +96,7 @@ export async function createHandler(
     const data = await checklistCreate({
       nome: validated.nome,
       tipoViagem: validated.tipoViagem as TripType,
-      descricao: validated.descricao,
+      descricao: validated.descricao || null,
     });
 
     res.status(201).json(successResponse(data));

@@ -18,7 +18,7 @@ import { ItemStatus, ITEM_STATUSES } from '@/constants/itemStatus';
 const createBodySchema = z.object({
   checklistId: zUUID,
   nome: zItemName,
-  observacao: zObservation,
+  observacao: zObservation.optional(),
 });
 
 const listQuerySchema = z.object({
@@ -97,7 +97,7 @@ export async function createHandler(
     const data = await checklistItemCreate({
       checklistId: validated.checklistId,
       nome: validated.nome,
-      observacao: validated.observacao,
+      observacao: validated.observacao || null,
     });
 
     res.status(201).json(successResponse(data));

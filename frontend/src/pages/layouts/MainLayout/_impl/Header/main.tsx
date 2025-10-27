@@ -20,6 +20,12 @@ export const Header = () => {
             <Link to="/" className="text-gray-700 hover:text-primary-600 transition-colors">
               Início
             </Link>
+            <Link
+              to="/checklists"
+              className="text-gray-700 hover:text-primary-600 transition-colors"
+            >
+              Meus Checklists
+            </Link>
           </nav>
         </div>
       </div>

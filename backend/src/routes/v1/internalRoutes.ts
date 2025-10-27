@@ -10,10 +10,25 @@
  */
 
 import { Router } from 'express';
+import * as checklistController from '@/api/v1/internal/checklist/controller';
+import * as checklistDetailController from '@/api/v1/internal/checklist/detail/controller';
+import * as checklistItemController from '@/api/v1/internal/checklist-item/controller';
+import * as checklistItemDetailController from '@/api/v1/internal/checklist-item/detail/controller';
 
 const router = Router();
 
-// Authenticated routes will be added here as features are implemented
-// Example: router.use('/checklist', checklistRoutes);
+// Checklist routes
+router.get('/checklist', checklistController.listHandler);
+router.post('/checklist', checklistController.createHandler);
+router.get('/checklist/:id', checklistDetailController.getHandler);
+router.put('/checklist/:id', checklistDetailController.updateHandler);
+router.delete('/checklist/:id', checklistDetailController.deleteHandler);
+
+// Checklist item routes
+router.get('/checklist-item', checklistItemController.listHandler);
+router.post('/checklist-item', checklistItemController.createHandler);
+router.get('/checklist-item/:id', checklistItemDetailController.getHandler);
+router.put('/checklist-item/:id', checklistItemDetailController.updateHandler);
+router.delete('/checklist-item/:id', checklistItemDetailController.deleteHandler);
 
 export default router;

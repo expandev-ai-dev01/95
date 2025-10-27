@@ -103,3 +103,34 @@ export const zEmail = z.string().email('Invalid email address');
  * @description Validates UUID strings
  */
 export const zUUID = z.string().uuid('Invalid UUID format');
+
+/**
+ * @summary Checklist name validation
+ * @description Validates checklist names (3-50 characters, no special chars except - and _)
+ */
+export const zChecklistName = z
+  .string()
+  .min(3, 'O nome deve ter pelo menos 3 caracteres')
+  .max(50, 'O nome deve ter no máximo 50 caracteres')
+  .regex(
+    /^[a-zA-Z0-9\s\-_]+$/,
+    'O nome não pode conter caracteres especiais exceto hífen e underscore'
+  );
+
+/**
+ * @summary Item name validation
+ * @description Validates item names (2-100 characters)
+ */
+export const zItemName = z
+  .string()
+  .min(2, 'O nome deve ter pelo menos 2 caracteres')
+  .max(100, 'O nome deve ter no máximo 100 caracteres');
+
+/**
+ * @summary Observation validation
+ * @description Validates observations (max 200 characters, nullable)
+ */
+export const zObservation = z
+  .string()
+  .max(200, 'A observação deve ter no máximo 200 caracteres')
+  .nullable();

@@ -6,9 +6,12 @@
  * @category public
  */
 
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/core/components/Button';
 
 export const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="text-center space-y-6">
@@ -17,11 +20,11 @@ export const HomePage = () => {
           Sistema de checklist para viagens - Organize suas viagens com facilidade
         </p>
         <div className="flex justify-center gap-4 mt-8">
-          <Button variant="primary" size="lg">
-            Começar Agora
+          <Button variant="primary" size="lg" onClick={() => navigate('/checklists/new')}>
+            Criar Checklist
           </Button>
-          <Button variant="secondary" size="lg">
-            Saiba Mais
+          <Button variant="secondary" size="lg" onClick={() => navigate('/checklists')}>
+            Ver Meus Checklists
           </Button>
         </div>
       </div>
